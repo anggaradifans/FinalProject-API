@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {addProducts,getProducts} = require('./../controllers').productControllers
+const {addProducts,getProducts, editProducts, deleteProducts} = require('./../controllers').productControllers
 
 var multer = require('multer')
 
@@ -25,5 +25,7 @@ var upload = multer({storage : storageConfig , fileFilter : filterConfig, limits
 
 router.get('/products', getProducts)
 router.post('/addproduct', upload.single('image') , addProducts)
+router.put('/editproduct/:id', upload.single('edit'), editProducts)
+router.delete('/deleteproduct/:id', deleteProducts)
 
 module.exports = router
