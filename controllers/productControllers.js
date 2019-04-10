@@ -3,8 +3,25 @@ var fs = require('fs')
 
 module.exports = {
     getProducts : (req,res) => {
-        var sql = 'select * from product;'
+        var sql = `select product.id, product_name, c.category, s.subcategory, price, discount, deskripsi ,image from product
+        join category as c on product.category = c.id
+        join subcategory as s on product.subcategory = s.id;`
         db.query(sql, (err,result)=> {
+            if(err) throw err
+            res.send(result)
+        })
+    },
+    getCategory : (req,res) => {
+        var sql = `select * from category`
+        db.query(sql, (err,result) => {
+            if(err) throw err
+            res.send(result)
+        })
+    },
+    getSubcategory : (req,res) => {
+        var sql = `select * from subcategory`
+        db.query(sql, (err,result) => {
+            if(err) throw err
             res.send(result)
         })
     },
@@ -60,5 +77,36 @@ module.exports = {
                 console.log(err)
             }
         })
+    },
+    productDetail : (req,res) => {
+        var id = req.params.id
+        var sql = `select * from product where id = ${id}`
+            db.query(sql, (err,result) => {
+                if(err) throw err
+                res.send(result)
+            })
+    },
+    ps4Videogames : (req,res) => {
+        var sql = `select * from product where category = 'Videogames' and subcategory = 'PS4';`
+        db.query(sql, (err,result) => {
+            if(err) throw err
+            res.send(result)
+        })
+    },
+    getSearchData : (req,res) => {
+        var name = req.query.product_name
+        var name1 = name.replace(/%20/g, " ")
+        var sql = `select * from product where product_name = '${name1}'`
+            db.query(sql, (err,result)=> {
+                if(err) throw err
+                res.send(result)
+            })
+    },
+    greatDeals : (req,res) => {
+        var sql = `select * from product where discount >= 30;`
+            db.query(sql, (err,result) => {
+                if(err) throw err
+                res.send(result)
+            })
     }
 }

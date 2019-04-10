@@ -3,5 +3,5 @@ var productControllers = require('./productControllers')
 
 module.exports = {
     userControllers,
-    productControllers
+    productControllers,
 }

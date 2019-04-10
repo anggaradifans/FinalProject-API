@@ -9,6 +9,6 @@ router.delete('/deleteuser/:id' , deleteUser)
 router.put('/edituser/:id', editUser)
 router.get('/userlogin', userLogin)
 router.get('/keeplogin', keepLogin)
-router.get('/verifyuser', verifyUser)
+router.put('/verifyuser', verifyUser)
 
 module.exports = router

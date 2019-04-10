@@ -1,5 +1,6 @@
 var db = require('./../database')
 const nodemailer = require('nodemailer')
+const Crypto = require('crypto')
 
 let transporter = nodemailer.createTransport({
     service : 'gmail',
@@ -41,15 +42,15 @@ module.exports = {
         db.query(sql, (err,result) =>{
             try{
                 if (err) throw err
-                if(result.length > 0){
-                    res.send('Username sudah ada')
-                } else {
+                if(result.length > 0) throw {error : true, msg : 'Username sudah ada'}
                     var data = req.body
+                    var hashPassword = Crypto.createHmac('sha256','secretabc').update(data.password).digest("hex")
+                    data ={...data, password : hashPassword}
                     var mailOptions = {
                         from : 'Jual2Game.com',
                         to : email ,
                         subject : 'Verifikasi Akun - Jual2Game.com',
-                        html : ` <a href="http://localhost:2000/user/verifyuser?username='${nama}'"> Klik Link ini untuk mengaktifkan akun Anda </a>`
+                        html : `<h2>Klik <a href="http://localhost:3000/verify?username=${nama}&password=${hashPassword}">Link</a> ini untuk mengaktifkan akun Anda</h2>`
                     }
                     transporter.sendMail(mailOptions, (err,res3) => {
                         res.send('Email Berhasil dikirim')
@@ -59,7 +60,7 @@ module.exports = {
                         if (err) throw err
                         res.send('Add User Sukses')
                     })
-                }
+                
                 
             } catch(err){
                 res.send(err)
@@ -82,7 +83,8 @@ module.exports = {
     }, userLogin : (req,res) => {
         var username = req.query.username
         var password = req.query.password
-        var sql = `select * from users where username = "${username}" and password = "${password}";`
+        var hashPassword = Crypto.createHmac('sha256','secretabc').update(password).digest('hex')
+        var sql = `select * from users where username = "${username}" and password = "${hashPassword}";`
         db.query(sql, (err,result) => {
                 if(err) throw err
                 res.send(result)
@@ -104,8 +106,9 @@ module.exports = {
     },
 
     verifyUser : (req,res) => {
-        username = req.query.username
-        var sql = `update users set verified = 1 where username = ${username}`
+        username = req.body.username
+        password = req.body.password
+        var sql = `update users set verified = 1 where username = '${username}' and password = '${password}'`
         db.query(sql, (err,result) => {
             if(err) throw err
             res.send('Email Anda Sudah terverifikasi, selamat berbelanja')
