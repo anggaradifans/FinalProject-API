@@ -11,20 +11,6 @@ module.exports = {
             res.send(result)
         })
     },
-    getCategory : (req,res) => {
-        var sql = `select * from category`
-        db.query(sql, (err,result) => {
-            if(err) throw err
-            res.send(result)
-        })
-    },
-    getSubcategory : (req,res) => {
-        var sql = `select * from subcategory`
-        db.query(sql, (err,result) => {
-            if(err) throw err
-            res.send(result)
-        })
-    },
     addProducts : (req,res) => {
         try {
             var newData = JSON.parse(req.body.data)
@@ -87,7 +73,10 @@ module.exports = {
             })
     },
     ps4Videogames : (req,res) => {
-        var sql = `select * from product where category = 'Videogames' and subcategory = 'PS4';`
+        var sql = `select product.id, product_name, c.category, s.subcategory, price, discount, deskripsi ,image from product
+                    join category as c on product.category = c.id
+                    join subcategory as s on product.subcategory = s.id
+                    where c.id = 1 and s.id = 1;`
         db.query(sql, (err,result) => {
             if(err) throw err
             res.send(result)

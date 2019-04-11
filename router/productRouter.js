@@ -27,8 +27,6 @@ var upload = multer({storage : storageConfig , fileFilter : filterConfig, limits
 
 
 router.get('/products', getProducts)
-router.get('/category', getCategory)
-router.get('/subcategory', getSubcategory)
 router.get('/product-detail/:id' , productDetail)
 router.get('/ps4videogames', ps4Videogames)
 router.get('/getsearchdata', getSearchData)
