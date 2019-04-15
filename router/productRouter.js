@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const {addProducts,getProducts, getCategory,getSubcategory, 
+const {addProducts,getProducts,
+        ViewProductDetail,viewManageProducts, 
         editProducts, deleteProducts, 
         productDetail, ps4Videogames, 
         getSearchData, greatDeals} = require('./../controllers').productControllers
@@ -27,6 +28,7 @@ var upload = multer({storage : storageConfig , fileFilter : filterConfig, limits
 
 
 router.get('/products', getProducts)
+router.get('/manageproducts', viewManageProducts)
 router.get('/product-detail/:id' , productDetail)
 router.get('/ps4videogames', ps4Videogames)
 router.get('/getsearchdata', getSearchData)

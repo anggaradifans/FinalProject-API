@@ -2,15 +2,25 @@ var db = require('./../database')
 var fs = require('fs')
 
 module.exports = {
+    //BUAT PRODUCT LIST
     getProducts : (req,res) => {
-        var sql = `select product.id, product_name, c.category, s.subcategory, price, discount, deskripsi ,image from product
-        join category as c on product.category = c.id
-        join subcategory as s on product.subcategory = s.id;`
+        var sql = `select product.id, product_name, category, subcategory, price, discount,image from product`
         db.query(sql, (err,result)=> {
             if(err) throw err
             res.send(result)
         })
     },
+    //BUAT MANAGE PRODUCT
+    viewManageProducts : (req,res) => {
+        var sql = `select product.id, product_name, c.category, s.subcategory, price, discount , deskripsi,image from product
+                    join category as c on product.category = c.id
+                    join subcategory as s on product.subcategory = s.id`
+        db.query(sql, (err,result) =>{
+            if(err) throw err
+            res.send(result)
+        })
+    },
+
     addProducts : (req,res) => {
         try {
             var newData = JSON.parse(req.body.data)
@@ -66,7 +76,7 @@ module.exports = {
     },
     productDetail : (req,res) => {
         var id = req.params.id
-        var sql = `select * from product where id = ${id}`
+        var sql = `select product.id, product_name, price, discount ,image, deskripsi from product where id = ${id}`
             db.query(sql, (err,result) => {
                 if(err) throw err
                 res.send(result)

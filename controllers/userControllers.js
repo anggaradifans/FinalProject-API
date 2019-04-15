@@ -13,7 +13,6 @@ let transporter = nodemailer.createTransport({
     }
 })
 
-
 module.exports = {
     getAllUser : (req,res) => {
         var sql = 'select * from users;'
