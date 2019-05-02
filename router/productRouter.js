@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {addProducts,getProducts,
-        ViewProductDetail,viewManageProducts, 
+        viewManageProducts, 
         editProducts, deleteProducts, 
         productDetail, ps4Videogames, 
         getSearchData, greatDeals} = require('./../controllers').productControllers

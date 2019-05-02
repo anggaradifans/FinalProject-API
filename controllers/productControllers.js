@@ -12,7 +12,7 @@ module.exports = {
     },
     //BUAT MANAGE PRODUCT
     viewManageProducts : (req,res) => {
-        var sql = `select product.id, product_name, c.category, s.subcategory, price, discount , deskripsi,image from product
+        var sql = `select product.id, product_name, c.id as idcat, s.id as idsub, c.category, s.subcategory, price, discount , deskripsi,image from product
                     join category as c on product.category = c.id
                     join subcategory as s on product.subcategory = s.id`
         db.query(sql, (err,result) =>{
