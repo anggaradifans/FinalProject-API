@@ -99,7 +99,7 @@ module.exports = {
                             subject : 'Invoice untuk ' + data.nama,
                             html : `<h3> Dear ${data.nama}, </h3>
                             
-                            <p>Thank you for purchasing our products! In order to complete your transaction, please upload your receipt in <a href="http://localhost:3000/verifytrans?order=${data.no}">here</a> </p>`,
+                            <p>Thank you for purchasing our products! In order to complete your transaction, please upload your receipt in <a href="http://localhost:3000/payment/${data.no}">here</a> </p>`,
                             attachments : [
                                 {
                                     filename : 'invoice.pdf',
