@@ -107,5 +107,40 @@ module.exports = {
                 if(err) throw err
                 res.send(result)
             })
+    },
+
+    WishlistOrNot : (req,res) => {
+        var sql = `select * from wishlist where iduser = ${req.query.iduser} and idproduk = ${req.query.idproduk}`
+        db.query(sql, (err,result) => {
+            if(err) throw err
+            res.send(result)
+        })
+    },
+    AddToWishList : (req,res) => {
+        var sql = `select * from wishlist where iduser = ${req.body.iduser} and idproduk = ${req.body.idproduk}`
+            db.query(sql, (err,result) => {
+                if(err) throw err
+                if(result.length > 0){
+                    var sql1= `delete from wishlist where iduser = ${req.body.iduser} and idproduk = ${req.body.idproduk}`
+                        db.query(sql1, (err, result1) => {
+                            if(err) throw err
+                            res.send('Item Deleted form Wishlist')
+                        })
+                } else {
+                    var sql2= `insert into wishlist set ?`
+                        db.query(sql2, req.body, (err, result2) => {
+                            if(err) throw err
+                            res.send('Item Added to Wishlist')
+                        })
+                }
+            })
+    },
+    ViewWishList : (req,res) => {
+        var sql = `select w.id, idproduk, p.product_name as namaProduk, p.image, p.price, p.discount from wishlist as w
+                    join product as p on w.idproduk = p.id where iduser = ${req.params.id};`
+            db.query(sql, (err,result) => {
+                if(err) throw err
+                res.send(result)
+            })
     }
 }

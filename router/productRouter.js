@@ -3,7 +3,7 @@ const {addProducts,getProducts,
         viewManageProducts, 
         editProducts, deleteProducts, 
         productDetail, ps4Videogames, 
-        getSearchData, greatDeals} = require('./../controllers').productControllers
+        getSearchData, greatDeals, AddToWishList, ViewWishList, WishlistOrNot} = require('./../controllers').productControllers
 
 var multer = require('multer')
 
@@ -33,7 +33,10 @@ router.get('/product-detail/:id' , productDetail)
 router.get('/ps4videogames', ps4Videogames)
 router.get('/getsearchdata', getSearchData)
 router.get('/greatdeals', greatDeals)
+router.get('/wl', WishlistOrNot)
+router.get('/wishlist/:id',ViewWishList)
 router.post('/addproduct', upload.single('image') , addProducts)
+router.post('/addtowl', AddToWishList )
 router.put('/editproduct/:id', upload.single('edit'), editProducts)
 router.delete('/deleteproduct/:id', deleteProducts)
 

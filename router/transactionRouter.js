@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {getTransactions, getTransactionsByUser, 
         getTransactionDetail, uploadPayment, approveTransaction
-        ,getTransactionsHistory} = require('./../controllers').transactionControllers
+        ,getTransactionsHistory, filterHistory, rejectTransaction} = require('./../controllers').transactionControllers
 
 var multer = require('multer')
 
@@ -29,8 +29,10 @@ router.get('/getTransactions', getTransactions)
 router.get('/transUser/:id', getTransactionsByUser)
 router.get('/transdetail/:id', getTransactionDetail)
 router.get('/history/:id', getTransactionsHistory)
+router.get('/filterhistory', filterHistory)
 router.put('/completePayment/:id', upload.single('receipt'), uploadPayment)
 router.put('/approve/:id', approveTransaction)
+router.put('/reject/:id', rejectTransaction)
 
 
 module.exports = router

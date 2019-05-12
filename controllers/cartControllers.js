@@ -24,14 +24,14 @@ module.exports = {
                     var sql2 = `update cart set quantity = quantity + ${req.body.quantity} where userid = ${req.body.userId} and productid = ${req.body.productId};`
                         db.query(sql2, (err,result1) =>{
                             if(err) throw err
-                            res.send('Add Product Success')
+                            res.send('Product Quantity added to Cart')
                         })
                 }
                 else {
                     var sql1 = `insert into cart set ?`
                         db.query(sql1, req.body, (err,result2) =>{
                             if(err) throw err
-                            res.send('Add Product Success')
+                            res.send('Product Added to Cart')
                         })
                 }
             })
