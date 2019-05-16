@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {getTransactions, getTransactionsByUser, 
+const {getTransactions, getTransactionsByUser, unapprovedTransactionsUser ,
         getTransactionDetail, uploadPayment, approveTransaction
         ,getTransactionsHistory, filterHistory, rejectTransaction} = require('./../controllers').transactionControllers
 
@@ -27,6 +27,7 @@ var upload = multer({storage : storageConfig , fileFilter : filterConfig, limits
 
 router.get('/getTransactions', getTransactions)
 router.get('/transUser/:id', getTransactionsByUser)
+router.get('/translist/:id', unapprovedTransactionsUser)
 router.get('/transdetail/:id', getTransactionDetail)
 router.get('/history/:id', getTransactionsHistory)
 router.get('/filterhistory', filterHistory)

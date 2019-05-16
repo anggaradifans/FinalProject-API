@@ -23,7 +23,7 @@ module.exports = {
             db.query(sql, (err,result) => {
                 if(err) throw err
                 var Mailoptions = {
-                    from : 'WalaoehGames.com',
+                    from : 'GamersLab.com',
                     to : req.body.email,
                     subject : `Invoice ${req.body.no} || Status : Rejected`,
                     html : `<h3> Dear ${req.body.username}, </h3>
@@ -40,6 +40,13 @@ module.exports = {
     getTransactionsByUser : (req,res) => {
         var sql = `select * from transactions
         where order_number = '${req.params.id}';`
+        db.query(sql, (err,result) => {
+            if(err) throw err
+            res.send(result)
+        })
+    },
+    unapprovedTransactionsUser : (req,res) => {
+        var sql = `select tanggal_checkout, jumlah_item, totalharga, order_number, status from transactions where iduser = ${req.params.id} and status NOT LIKE 'Approved';`
         db.query(sql, (err,result) => {
             if(err) throw err
             res.send(result)

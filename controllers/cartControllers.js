@@ -66,7 +66,7 @@ module.exports = {
             iduser : req.body.userId,
             totalharga : req.body.totalHarga,
             jumlah_item : req.body.jumlah_item,
-            status : req.body.status
+            status : req.body.status,
          }
         var sql = `insert into transactions set ?`
             db.query(sql, newData, (err,result) => {
@@ -74,11 +74,10 @@ module.exports = {
                 fs.readFile('./template/invoice.html' , {encoding : 'utf-8'}, (err,hasilRead) => {
                     if(err) throw err
                     var template = hbrs.compile(hasilRead)
-                    var data = {
+                    var data =  {
                         no : req.body.order_number,
                         nama : req.body.username,
-                        tanggal : newData.tanggal_checkout,
-                        total : newData.totalharga
+                        cart : req.body.cart,
                     }
                     var hasilHbrs = template(data)
                     var options = {
@@ -99,7 +98,13 @@ module.exports = {
                             subject : 'Invoice untuk ' + data.nama,
                             html : `<h3> Dear ${data.nama}, </h3>
                             
-                            <p>Thank you for purchasing our products! In order to complete your transaction, please upload your receipt in <a href="http://localhost:3000/payment/${data.no}">here</a> </p>`,
+                            <p>Thank you for purchasing our products! In order to complete your transaction, please upload your receipt in <a href="http://localhost:3000/payment/${data.no}">here</a> </p>
+                            <p>Here is Your Transaction Detail : </p>
+                            <p>Invoice Number : ${data.no} </p>
+                            <p>Total Prices : ${newData.totalharga} </p>
+                            <p>Total Item : ${newData.jumlah_item} </p>
+                            <p>Checkout Date : ${newData.tanggal_checkout} </p>
+                            `,
                             attachments : [
                                 {
                                     filename : 'invoice.pdf',
