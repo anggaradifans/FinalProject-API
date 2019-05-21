@@ -10,6 +10,7 @@ const port = 2000
 const {userRouter, productRouter, categoryRouter, cartRouter, transRouter} = require('./router')
 
 app.use('/upload', express.static('upload'))
+app.use('/receipt', express.static('receipt'))
 app.use('/user', userRouter)
 app.use('/product', productRouter)
 app.use('/category', categoryRouter)

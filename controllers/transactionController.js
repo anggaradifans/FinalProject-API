@@ -35,7 +35,23 @@ module.exports = {
                     res.send('Transaction Rejected')
                 })
             })
-    }, 
+    },
+    annualReport : (req,res) => {
+        var sql = `select tanggal_bayar, u.username, jumlah_item, totalharga, order_number from transactions as t 
+        join users as u on iduser = u.id where status = 'Approved';`
+        db.query(sql, (err,result) => {
+            if(err) throw err
+            res.send(result)
+        })
+    },
+    filterAnnualReport : (req,res) => {
+        var sql = `select tanggal_bayar, u.username, jumlah_item, totalharga, order_number from transactions as t 
+        join users as u on iduser = u.id where status = 'Approved' and tanggal_checkout like '%-${req.query.month}-%';`
+            db.query(sql, (err,result) => {
+                if(err) throw err
+                res.send(result)
+            })
+    },
     //AS USER
     getTransactionsByUser : (req,res) => {
         var sql = `select * from transactions
