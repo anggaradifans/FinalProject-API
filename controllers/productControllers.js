@@ -74,6 +74,7 @@ module.exports = {
             }
         })
     },
+    
     productDetail : (req,res) => {
         var id = req.params.id
         var sql = `select product.id, product_name, price, discount ,image, deskripsi from product where id = ${id}`
@@ -81,16 +82,6 @@ module.exports = {
                 if(err) throw err
                 res.send(result)
             })
-    },
-    ps4Videogames : (req,res) => {
-        var sql = `select product.id, product_name, c.category, s.subcategory, price, discount, deskripsi ,image from product
-                    join category as c on product.category = c.id
-                    join subcategory as s on product.subcategory = s.id
-                    where c.id = 1 and s.id = 1;`
-        db.query(sql, (err,result) => {
-            if(err) throw err
-            res.send(result)
-        })
     },
     getSearchData : (req,res) => {
         var name = req.query.product_name

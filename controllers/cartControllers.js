@@ -78,6 +78,7 @@ module.exports = {
                         no : req.body.order_number,
                         nama : req.body.username,
                         cart : req.body.cart,
+                        checkout : newData.tanggal_checkout
                     }
                     var hasilHbrs = template(data)
                     var options = {
@@ -93,9 +94,9 @@ module.exports = {
                     pdf.create(hasilHbrs, options).toStream((err,hasilStream) => {
                         if(err) throw err
                         var Mailoptions = {
-                            from : 'WalaoehGames.com',
+                            from : 'GamersLab',
                             to : req.body.email,
-                            subject : 'Invoice untuk ' + data.nama,
+                            subject : 'Invoice ' + data.no + ' || Purchase Confirmation',
                             html : `<h3> Dear ${data.nama}, </h3>
                             
                             <p>Thank you for purchasing our products! In order to complete your transaction, please upload your receipt in <a href="http://localhost:3000/payment/${data.no}">here</a> </p>

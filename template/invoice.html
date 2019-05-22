@@ -9,29 +9,79 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Invoice #{{no}}</title>
+    <style>
+     .invoice-box {
+        height: 600px;
+        margin: auto;
+        padding: 50px;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        color: #555;
+      }
+
+      .invoice-box table {
+        width: 100%;
+        line-height: inherit;
+        text-align: left;
+      }
+    
+      .invoice-box table td {
+          padding: 5px;
+          vertical-align: top;
+      }
+
+      .invoice-box table tr td:nth-child(2) {
+        text-align: right;
+      }
+      
+      .invoice-box table tr.top table td {
+          padding-bottom: 20px;
+      }
+
+      .invoice-box table tr.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-        <h1>Invoice for {{nama}} || #{{no}}</h1>
-
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <td>Product Name</td>
-                    <td>Quantity</td>
-                    <td>Price</td>
-                </tr>
-            </thead>
-            <tbody>
-              {{#each cart}}
-                <tr>
-                    <td>{{product_name}}</td>
-                    <td>{{quantity}}</td>
-                    <td>{{price}}</td>
-                </tr>
-              {{/each}}
-            </tbody>
-        </table>
+      <div class="invoice-box">
+          <table cellpadding="0" cellspacing="0">  
+            <tr class="top">
+                  <td colspan="3">
+                      <table>
+                          <tr>
+                              <td class="title">
+                                  <img src="http://localhost:2000/upload/LogoNavbar.png" style="height: 100px;width:100px; max-width:300px;">
+                              </td>
+                              
+                              <td>
+                                  Invoice #: {{no}}<br>
+                                  For : {{nama}}<br>
+                                  Purchase Date : {{checkout}}
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+              </tr>
+              <tr class="heading">
+                  <td>Product Name</td>
+                  <td>Quantity</td>
+                  <td>Price</td>
+              </tr>
+                {{#each cart}}
+                  <tr>
+                      <td>{{product_name}}</td>
+                      <td>{{quantity}}</td>
+                      <td>Rp. {{price}}</td>
+                  </tr>
+                {{/each}}
+          </table>
+          
+      </div>
     </div>
   </body>
 </html>

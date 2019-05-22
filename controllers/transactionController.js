@@ -28,7 +28,10 @@ module.exports = {
                     subject : `Invoice ${req.body.no} || Status : Rejected`,
                     html : `<h3> Dear ${req.body.username}, </h3>
                     
-                    <p>It seems that your transaction has been rejected by our Admin. In order to complete your transaction again, please visit your transactions page in <a href="http://localhost:3000/payment/${req.body.no}">here</a> </p>`
+                    <p>It seems that your transaction has been rejected by our Admin. The reason we rejected your purchase : <br>
+                    ${req.body.error}. <br>
+                    
+                    In order to complete your transaction again, please visit your transactions page in <a href="http://localhost:3000/payment/${req.body.no}">here</a> </p>`
                 }
                 transporter.sendMail(Mailoptions, (err,resultMail) => {
                     if(err) throw err

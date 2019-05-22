@@ -2,7 +2,7 @@ const router = require('express').Router()
 const {addProducts,getProducts,
         viewManageProducts, 
         editProducts, deleteProducts, 
-        productDetail, ps4Videogames, 
+        productDetail,
         getSearchData, greatDeals, AddToWishList, ViewWishList, WishlistOrNot} = require('./../controllers').productControllers
 
 const upload = require('./../helpers/multer')
@@ -10,7 +10,6 @@ const upload = require('./../helpers/multer')
 router.get('/products', getProducts)
 router.get('/manageproducts', viewManageProducts)
 router.get('/product-detail/:id' , productDetail)
-router.get('/ps4videogames', ps4Videogames)
 router.get('/getsearchdata', getSearchData)
 router.get('/greatdeals', greatDeals)
 router.get('/wl', WishlistOrNot)
