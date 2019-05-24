@@ -1,17 +1,7 @@
 var db = require('./../database')
-const nodemailer = require('nodemailer')
 const Crypto = require('crypto')
 
-let transporter = nodemailer.createTransport({
-    service : 'gmail',
-    auth :{
-        user : "anggaradifans@gmail.com",
-        pass : 'dhxliyqmlzxusxoy'
-    },
-    tls : {
-        rejectUnauthorized : false
-    }
-})
+const transporter = require('../helpers/nodemailer')
 
 module.exports = {
     getAllUser : (req,res) => {
@@ -48,8 +38,8 @@ module.exports = {
                     var mailOptions = {
                         from : 'Jual2Game.com',
                         to : email ,
-                        subject : 'Verifikasi Akun - Jual2Game.com',
-                        html : `<h2>Klik <a href="http://localhost:3000/verify?username=${nama}&password=${hashPassword}">Link</a> ini untuk mengaktifkan akun Anda</h2>`
+                        subject : 'Verify your Account - Gamerslab',
+                        html : `<h2>Click <a href="http://localhost:3000/verify?username=${nama}&password=${hashPassword}">Link</a> here to activate your account</h2>`
                     }
                     transporter.sendMail(mailOptions, (err,res3) => {
                         res.send('Email Berhasil dikirim')

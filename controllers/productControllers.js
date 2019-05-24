@@ -57,20 +57,22 @@ module.exports = {
     }, 
     deleteProducts : (req,res) => {
         var id = req.params.id
-        var sql = `select * from product where id = ${id}`
+        var sql = `select image from product where id = ${id}`
         db.query(sql, (err,result) =>{
-            try {
-                if(err) throw err
-                var path = result[0].image
-                var sql2 = `delete from product where id = ${id}`
-                    db.query(sql2, (err,result1) =>{
-                        if(err) throw err
-                        res.send('Delete Data Sukses')
-                        fs.unlinkSync(path)
-                    })
-            }
-            catch{
-                console.log(err)
+            if(result.length > 0){
+                try {
+                    if(err) throw err
+                    var path = result[0].image
+                    var sql2 = `delete from product where id = ${id}`
+                        db.query(sql2, (err,result1) =>{
+                            if(err) throw err
+                            res.send('Delete Data Sukses')
+                            fs.unlinkSync(path)
+                        })
+                }
+                catch{
+                    console.log(err)
+                }
             }
         })
     },
