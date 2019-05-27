@@ -3,13 +3,13 @@ const db = require('./../database')
 
 module.exports = {
     BestSellerByProductName : (req,res) => {
-        var sql = `select td.product_name, c.category,count(*) as sold_unit from transaction_detail as td
+        var sql = `select td.product_name, c.category,sum(quantity) as sold_unit from transaction_detail as td
                     join product as p on td.product_name = p.product_name
                     join category as c on p.category = c.id
                     join transactions as t on td.order_number = t.order_number
                     where t.status = 'Approved'
                     group by td.product_name
-                    order by count(*) desc
+                    order by sum(quantity) desc
                     limit 10;`
         db.query(sql, (err, result) => {
             if(err) throw err
@@ -17,7 +17,7 @@ module.exports = {
         })
     },
     BestSellerByCategory : (req,res) => {
-        var sql = `select c.category, s.subcategory, count(*) as sold_unit from transaction_detail as td
+        var sql = `select c.category, s.subcategory, sum(quantity) as sold_unit from transaction_detail as td
                     join product as p on td.product_name = p.product_name
                     join category as c on p.category = c.id
                     join subcategory as s on p.subcategory = s.id
@@ -50,7 +50,7 @@ module.exports = {
                     join transactions as t on td.order_number = t.order_number
                     where t.status = 'Approved'
                     group by td.product_name
-                    order by count(*) desc
+                    order by sum(quantity) desc
                     limit 6;`
         db.query(sql, (err,result) => {
             if(err) throw err
